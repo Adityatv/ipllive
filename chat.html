@@ -4,7 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <title>Live Stream</title>
+    <script src="https://content.jwplatform.com/libraries/IDzF9Zmk.js"></script> <!-- JW Player Library -->
+    <link rel="stylesheet" href="assets/jwplayer.js"> 
+    <link rel="stylesheet" href="assets/style.css">
+
+
+    <script type="text/javascript">
+        jwplayer.key = 'Khpp2dHxlBJHC8MCmLnBuV2jK/DwDnJMniwF6EO9HC/riJ712ZmbHg==';
+    </script>
 
     <style>
  body {
@@ -307,10 +315,32 @@
 
     </style>
 
-    </head>
 </head>
 <body>
-   
+    <div class="container">
+        <div id="player"></div>
+
+        <!-- Video Embed -->
+        <div class="video-wrapper" id="videoWrapper">
+           <style type="text/css">
+            body
+            {
+                margin:   0;
+                overflow: hidden;
+            }
+
+            #iframe1
+            {
+                height:   100%;
+                left:     0px;
+                position: absolute;
+                top:      0px;
+                width:    100%;
+            }
+        </style>
+<iframe src="http://aaditv.free.nf/aaditv.app/SonyLiv/index.html" style="border:0px #ffffff none;" name="myiFrame" scrolling="no" frameborder="1" marginheight="0px" marginwidth="0px" height="400px" width="600px" allowfullscreen></iframe>
+</div>
+
 
 
 
@@ -322,11 +352,12 @@
         <button class="chat-toggle" id="chatToggle"></button>
     </div>
 
-   
+    <!-- Telegram Link -->
+    <a class="telegram-link" href="https://t.me/vaathala1" target="_blank" rel="noopener noreferrer">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Join Telegram">
+    </a>
 
     <script>
-       
-
         // Chat toggle functionality
         document.getElementById('chatToggle').addEventListener('click', function() {
             const chatBox = document.getElementById('chatBox');
