@@ -1,35 +1,74 @@
-<img class="splash-logo" src="https://raw.githubusercontent.com/Adityatv/ipllive/refs/heads/main/20250619_191919.gif" alt="logo">
-<style>.app-loaded {
-  display: none;
-  padding: 1rem;
-  font-size: 1.5rem;
-}
-
-/* Would ideally be added in the "style" section in <head> so that it loads when the page loads immediately */
-.splash-logo {
-  position: absolute;
-  left: 48%;
-  top: 48%;
-  width: 50rem;
-  height: auto;
-}
-@keyframes blinker {
-  50% {
-    opacity: 0;
-  }
-}
-@-webkit-keyframes blinker {
-  50% {
-    opacity: 0;
-  }
-}
+<!DOCTYPE html>
+	
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="" content="">
+  </head>
+  <body>
+    
+ <style>
+ 	
+ body {
+   padding: 0;
+   margin: 0;
+ }
+ .cover img {
+   width: 500px;
+   height: 500px;
+   margin-top: 1%;
+   margin-left: 1%;
+ }
+   .cover {
+     background: #FFFFFF;
+     position: fixed;
+     width: 100%;
+     height: 100%;
+     opacity: 0;
+     animation: fade-out 8s;
+   }
+   .cover #icon {
+     --size: 100px;
+     position: absolute;
+     top: 0%;
+     left: 0%;
+     transform: translate(-50%, -50%);
+     width: var(--size);
+     animation: zoom-in 2s;
+     animation-delay: 2s;
+  
+   }
+   @keyframes zoom-in {
+     50% {
+       width: var(--size);
+     }
+     60% {
+       width: calc(var(--size)*0.9);
+     }
+     100% {
+       width: 250%;
+     }
+   }
+   @keyframes fade-out {
+     0%, 85% {
+       opacity: 1;
+     }
+     100% {
+       opacity: 0;
+     }
+   }
+   
+ 
 </style>
-<script>function loadApp() {
-  document.querySelector(".splash-logo").style.display = "none";
-  document.querySelector(".app-loaded").style.display = "block";
-}
+ 
 
-setTimeout(loadApp, 5000);</script>
+<div class="cover">
+<img src="https://i.postimg.cc/Z58MtFQD/20250619-191919.gif" width="100%" height="100%" frameborder="0">
+</div>
+
+    
+  </body>
+</html>
 <!DOCTYPE html>
 
 
