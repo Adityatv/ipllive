@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>AADITV Media Player</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+  <meta name="referrer" content="no-referrer"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3.6.12/dist/plyr.css"/>
+  <style>
+    body {
+      background-color: #000;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    html, body {
+      height: 100%;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+    }
+    .plyr {
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <video id="player" controls playsinline></video>
+
+  <script src="https://cdn.jsdelivr.net/npm/plyr@3.6.12/dist/plyr.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const video = document.getElementById('player');
+
+      // Function to get query parameters
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+
+      // Get stream (can be MP4, MKV, or multiple URLs for quality options)
+      const stream = getQueryParam('stream');
+      const streams = getQueryParam('streams'); // Example: ?streams=720p.mp4,1080p.mp4
+
+      if (!stream && !streams) {
+        document.body.innerHTML = '<p style="color:white; text-align:center; margin-top:20%;">No video provided!</p>';
+        return;
+      }
+
+      let sources = [];
+
+      if (streams) {
+        // multiple qualities provided
+        const urls = streams.split(',');
+        urls.forEach((url, index) => {
+          const label = url.includes("720") ? "720p" :
+                        url.includes("1080") ? "1080p" :
+                        url.includes("480") ? "480p" : `Quality ${index+1}`;
+          sources.push({
+            src: url.trim(),
+            type: 'video/mp4',
+            size: label
+          });
+        });
+      } else {
+        // single file
+        sources.push({
+          src: stream,
+          type: 'video/mp4',
+          size: 'Default'
+        });
+      }
+
+      // Initialize Plyr with quality + download
+      const player = new Plyr(video, {
+        controls: [
+          'play-large',
+          'play',
+          'progress',
+          'current-time',
+          'mute',
+          'volume',
+          'settings',
+          'download',
+          'fullscreen'
+        ],
+        settings: ['quality', 'speed'],
+        quality: {
+          default: 720,
+          options: sources.map(s => parseInt(s.size) || 720),
+          forced: true,
+          onChange: (newQuality) => {
+            const match = sources.find(s => s.size.includes(newQuality));
+            if (match) {
+              player.source = {
+                type: 'video',
+                sources: [match]
+              };
+            }
+          }
+        }
+      });
+
+      // Load initial source
+      player.source = {
+        type: 'video',
+        sources: sources
+      };
+
+      // Enable download option
+      const downloadBtn = document.querySelector('.plyr__controls [data-plyr="download"]');
+      if (downloadBtn) {
+        downloadBtn.setAttribute('href', sources[0].src);
+        downloadBtn.setAttribute('download', 'video.mp4');
+      }
+
+      // Screen orientation lock when fullscreen
+      document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement) {
+          if (screen.orientation && screen.orientation.lock) {
+            screen.orientation.lock('landscape').catch(err => {
+              console.error('Error locking orientation:', err);
+            });
+          }
+        }
+      });
+    });
+
+    // Small credit popup
+    window.addEventListener("load", function () {
+      if (window.confirm("Created by Aaditv")) {
+        window.location.href = "https://t.me/aditvlive";
+      }
+    });
+  </script>
+</body>
+</html>
